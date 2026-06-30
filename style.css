@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'system-ui', -apple-system , BlinkMacSystemFont;
+    background : #eff7ff ;
+    color : #1e293b  ; 
+    line-height : 1.5 ;
+}
+.header{
+    background : White ;
+    padding : 1.5rem  2rem;
+    border-bottom : 1px solid #e3e8f0 ;
+    display : flex ;
+    justify-content : space-between ;
+    align-items : center ;
+}
+.header h1{
+    font-size : 1.5rem ;
+    font-weight : 600 ;
+    color: #1e293b ;
+}
+.header-controls{
+    display : flex ;
+    gap : 1rem ;
+    align-items : center ;
+}
+.dropdown {
+    position: relative;
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius : 9px ;
+    cursor : pointer ;
+    font-size : 0.8rem ;
+    border: 1px solid #d1d5db;
+}
+.date-picker{
+    background: white;
+    cursor : pointer ;
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+    display : flex ;
+    align-items : center ;
+    gap : 0.5rem ;
+    font-size : 0.8rem ;
+    border-radius : 9px ;
+}
+.export-btn{
+    color : white ;
+    border : none ;
+    border-radius : 9px ;
+    padding: 0.5rem 1rem;
+    cursor : pointer ;
+    display : flex ;
+    align-items : center ;
+    gap : 0.5rem ;
+    font-size : 0.8rem ;
+    background : rgb(255, 0, 0) ;
+
+}
