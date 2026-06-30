@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <header class="header">
@@ -27,9 +29,43 @@
         </div>
     </header>
 
-    
-    
+    <main class="main-content">
+        <div class="dashboard-grid">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Monthly Income</h3>
+                    <button class="card-menu">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="amount income-amount">$2,345.00</div>
+                <div class="change">
+                    <i class="fas fa-arrow-up"></i>
+                    12% vs LastMonth
+                </div>
+            </div>
+            
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Monthly Expenses</h3>
+                    <button class="card-menu">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="amount income-amount">$1,845.00</div>
+                <div class="change">
+                    <i class="fas fa-arrow-up"></i>
+                    12% vs LastMonth
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
 
     <script src="script.js"></script>
 </body>
+
 </html>
