@@ -3,186 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Expense Tracker</title>
-    <!-- FontAwesome CDN for Icons -->
+    <title>Expense Tracker Pro</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Good morning, Codynn</h1>
-        <div class="header-controls">
-            <div class="dropdown">
-                USD ($) <i class="fas fa-chevron-down"></i>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-wallet"></i>
+                Expense Tracker Pro
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-success" onclick="openModal('incomeModal')">
+                    <i class="fas fa-plus-circle"></i> Add Income
+                </button>
+                <button class="btn btn-danger" onclick="openModal('expenseModal')">
+                    <i class="fas fa-minus-circle"></i> Add Expense
+                </button>
+                <button class="btn btn-primary" onclick="openModal('limitModal')">
+                    <i class="fas fa-sliders-h"></i> Set Limit
+                </button>
             </div>
-            <div class="date-picker">
-                <i class="fas fa-calendar"></i> 16 January 2025
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="icon icon-income">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="stat-label">Total Income</div>
+                <div class="stat-value" id="totalIncome">$0.00</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-chart-line"></i> Monthly earnings
+                </div>
             </div>
-            <button class="export-btn">
-                <i class="fas fa-download"></i> Export
+            <div class="stat-card">
+                <div class="icon icon-expense">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="stat-label">Total Expenses</div>
+                <div class="stat-value" id="totalExpenses">$0.00</div>
+                <div class="stat-change negative">
+                    <i class="fas fa-chart-line"></i> Monthly spending
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon icon-balance">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="stat-label">Balance</div>
+                <div class="stat-value" id="balance">$0.00</div>
+                <div class="stat-change positive">
+                    <i class="fas fa-piggy-bank"></i> Available funds
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="icon icon-limit">
+                    <i class="fas fa-gauge-high"></i>
+                </div>
+                <div class="stat-label">Spending Limit</div>
+                <div class="stat-value" id="spendingLimit">$0.00</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="limitProgress" style="width: 0%"></div>
+                </div>
+                <small style="color: #718096; margin-top: 5px; display: block;" id="limitText">0% used</small>
+            </div>
+        </div>
+
+        <!-- Monthly Overview Chart -->
+        <div class="chart-card">
+            <h3>
+                <i class="fas fa-chart-bar" style="color: #667eea;"></i>
+                Monthly Income vs Expenses Overview
+            </h3>
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Transactions Table -->
+        <div class="transactions-card">
+            <div class="transactions-header">
+                <h3>
+                    <i class="fas fa-list-ul" style="color: #667eea;"></i>
+                    Recent Transactions
+                </h3>
+                <div class="filters">
+                    <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+                    <button class="filter-btn" onclick="setFilter('income', this)">Income</button>
+                    <button class="filter-btn" onclick="setFilter('expense', this)">Expenses</button>
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionsTable">
+                        <tr>
+                            <td colspan="6" class="empty-state">
+                                <i class="fas fa-inbox"></i>
+                                <p>No transactions yet. Start by adding income or expenses!</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Income Modal -->
+    <div class="modal" id="incomeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle" style="color: #48bb78;"></i> Add Income</h2>
+                <button class="close-btn" onclick="closeModal('incomeModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Amount ($) *</label>
+                <input type="number" class="form-input" id="incomeAmount" placeholder="Enter amount" min="0.01" step="0.01">
+            </div>
+            <div class="form-group">
+                <label>Category *</label>
+                <select class="form-select" id="incomeCategory">
+                    <option value="">Select category</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Freelance">Freelance</option>
+                    <option value="Business">Business</option>
+                    <option value="Investment">Investment</option>
+                    <option value="Gift">Gift</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-input" id="incomeDesc" placeholder="Enter description">
+            </div>
+            <div class="form-group">
+                <label>Date *</label>
+                <input type="date" class="form-input" id="incomeDate">
+            </div>
+            <button class="btn btn-success" onclick="addIncome()" style="width: 100%;">
+                <i class="fas fa-plus-circle"></i> Add Income
             </button>
         </div>
     </div>
 
-    <div class="main-content">
-        <!-- Top KPI Cards -->
-        <div class="dashboard-grid">
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Monthly income</span>
-                    <button class="card-menu"><i class="fas fa-ellipsis"></i></button>
-                </div>
-                <div class="amount income-amount" id="income-amount">$2,645.00</div>
-                <div class="change change-up"><i class="fas fa-arrow-up"></i> 12% vs last month</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-title">Monthly expenses</span>
-                    <button class="card-menu"><i class="fas fa-ellipsis"></i></button>
-                </div>
-                <div class="amount expense-amount" id="expense-amount">$1,895.00</div>
-                <div class="change change-up"><i class="fas fa-arrow-up"></i> 8% vs last month</div>
-            </div>
-
-            <!-- Virtual Credit Card -->
-            <div class="card my-card">
-                <div style="font-size: 0.75rem; opacity: 0.8; margin-bottom: 1rem;">Linked to your primary wallet</div>
-                <div class="card-chip"></div>
-                <div class="card-number">**** **** **** 4242</div>
-                <div class="card-holder">Codynn</div>
-                <div class="card-logo">
-                    <div class="logo-circle logo-red"></div>
-                    <div class="logo-circle logo-orange"></div>
-                </div>
-                <div class="spending-section">
-                    <div style="margin-bottom: 0.5rem; font-size: 0.75rem; opacity: 0.9;">Spending limit</div>
-                    <div class="spending-limit" id="spending-limit">$12,645.00</div>
-                    <div class="spending-used">Used from $12,645.00</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progress-fill"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Transactions Section -->
-        <div class="transactions-section">
-            <div class="section-header">
-                <h2>Recent Transactions</h2>
-                <div class="filters">
-                    <button class="filter-button"><i class="fas fa-sort"></i> Sort</button>
-                    <button class="filter-button"><i class="fas fa-filter"></i> Filter</button>
-                </div>
-            </div>
-            
-            <table class="transactions-table" id="transactions-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody id="transactions-tbody">
-                    <!-- Javascript will dynamically populate rows here -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Floating Action Buttons -->
-    <div class="add-buttons">
-        <button class="fab fab-income" title="Add Income" onclick="openModel('incomeModel')">
-            <i class="fas fa-plus"></i>
-        </button>
-        <button class="fab fab-expense" title="Add Expense" onclick="openModel('expenseModel')">
-            <i class="fas fa-minus"></i>
-        </button>
-    </div>
-
-    <!-- Income Modal -->
-    <div class="model" id="incomeModel">
-        <div class="model-content">
-            <div class="model-header">
-                <h2 class="model-title">Add Income</h2>
-                <button class="close-button" onclick="closeModel('incomeModel')"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="model-body">
-                <form id="incomeForm">
-                    <div class="form-group">
-                        <label class="form-label">Amount</label>
-                        <input type="number" class="form-input" id="incomeAmount" placeholder="Enter amount" required autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Category</label>
-                        <select class="form-select" id="incomeCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="Salary">Salary</option>
-                            <option value="Freelance">Freelance</option>
-                            <option value="Business">Business</option>
-                            <option value="Investment">Investment</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <input type="text" class="form-input" id="incomeDescription" placeholder="Enter description">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-input" id="incomeDate" required>
-                    </div>
-                </form>
-            </div>
-            <div class="model-footer">
-                <button class="button-secondary" onclick="closeModel('incomeModel')">Cancel</button>
-                <button class="button-primary" onclick="addIncome()">Add Income</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Expense Modal -->
-    <div class="model" id="expenseModel">
-        <div class="model-content">
-            <div class="model-header">
-                <h2 class="model-title">Add Expense</h2>
-                <button class="close-button" onclick="closeModel('expenseModel')"><i class="fas fa-times"></i></button>
+    <div class="modal" id="expenseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-minus-circle" style="color: #fc8181;"></i> Add Expense</h2>
+                <button class="close-btn" onclick="closeModal('expenseModal')">&times;</button>
             </div>
-            <div class="model-body">
-                <form id="expenseForm">
-                    <div class="form-group">
-                        <label class="form-label">Amount</label>
-                        <input type="number" class="form-input" id="expenseAmount" placeholder="Enter amount" required autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Category</label>
-                        <select class="form-select" id="expenseCategory" required>
-                            <option value="">Select Category</option>
-                            <option value="Food">Food</option>
-                            <option value="Entertainment">Entertainment</option>
-                            <option value="Shopping">Shopping</option>
-                            <option value="Transport">Transport</option>
-                            <option value="Utilities">Utilities</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Description</label>
-                        <input type="text" class="form-input" id="expenseDescription" placeholder="Enter description">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-input" id="expenseDate" required>
-                    </div>
-                </form>
+            <div class="form-group">
+                <label>Amount ($) *</label>
+                <input type="number" class="form-input" id="expenseAmount" placeholder="Enter amount" min="0.01" step="0.01">
             </div>
-            <div class="model-footer">
-                <button class="button-secondary" onclick="closeModel('expenseModel')">Cancel</button>
-                <button class="button-primary" onclick="addExpense()">Add Expense</button>
+            <div class="form-group">
+                <label>Category *</label>
+                <select class="form-select" id="expenseCategory">
+                    <option value="">Select category</option>
+                    <option value="Food">Food</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Education">Education</option>
+                    <option value="Other">Other</option>
+                </select>
             </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-input" id="expenseDesc" placeholder="Enter description">
+            </div>
+            <div class="form-group">
+                <label>Date *</label>
+                <input type="date" class="form-input" id="expenseDate">
+            </div>
+            <button class="btn btn-danger" onclick="addExpense()" style="width: 100%;">
+                <i class="fas fa-minus-circle"></i> Add Expense
+            </button>
+        </div>
+    </div>
+
+    <!-- Spending Limit Modal -->
+    <div class="modal" id="limitModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-sliders-h" style="color: #667eea;"></i> Set Spending Limit</h2>
+                <button class="close-btn" onclick="closeModal('limitModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Monthly Limit ($) *</label>
+                <input type="number" class="form-input" id="limitAmount" placeholder="Enter spending limit" min="0" step="0.01">
+                <small style="color: #718096; display: block; margin-top: 8px;">
+                    <i class="fas fa-info-circle"></i> Set a monthly budget to track your spending
+                </small>
+            </div>
+            <button class="btn btn-primary" onclick="setSpendingLimit()" style="width: 100%;">
+                <i class="fas fa-save"></i> Save Limit
+            </button>
         </div>
     </div>
 
