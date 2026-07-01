@@ -1,185 +1,230 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-body{
-    font-family: 'system-ui', -apple-system , BlinkMacSystemFont;
-    background : #eff7ff ;
-    color : #1e293b  ; 
-    line-height : 1.5 ;
+
+body {
+    background-color: #f8f8fc;
+    color: #1e293b;
+    line-height: 1.5;
 }
-.header{
-    background : White ;
-    padding : 1.5rem  2rem;
-    border-bottom : 1px solid #e3e8f0 ;
-    display : flex ;
-    justify-content : space-between ;
-    align-items : center ;
+
+/* Header */
+.header {
+    background-color: white;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.header h1{
-    font-size : 1.5rem ;
-    font-weight : 600 ;
-    color: #1e293b ;
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
 }
-.header-controls{
-    display : flex ;
-    gap : 1rem ;
-    align-items : center ;
+.header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
 }
-.dropdown {
+.dropdown, .date-picker {
     position: relative;
-    background: white;
-    padding: 0.5rem 1rem;
-    border-radius : 9px ;
-    cursor : pointer ;
-    font-size : 0.8rem ;
     border: 1px solid #d1d5db;
-}
-.date-picker{
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
     background: white;
-    cursor : pointer ;
-    border: 1px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.export-btn {
+    background: #ea580c;
+    color: white;
+    border: none;
+    border-radius: 8px;
     padding: 0.5rem 1rem;
-    display : flex ;
-    align-items : center ;
-    gap : 0.5rem ;
-    font-size : 0.8rem ;
-    border-radius : 9px ;
-}
-.export-btn{
-    color : white ;
-    border : none ;
-    border-radius : 9px ;
-    padding: 0.5rem 1rem;
-    cursor : pointer ;
-    display : flex ;
-    align-items : center ;
-    gap : 0.5rem ;
-    font-size : 0.8rem ;
-    background : rgb(255, 0, 0) ;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
 }
 
-.main-content{
-    padding : 2rem ;
-    max-width:1400px;
-    margin : 0 auto ;
+/* Main Content & Grid */
+.main-content {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
-.dashboard-grid{
-    display : grid ;
-    grid-template-columns : 1fr 1fr 350px ;
-    gap : 2rem ;
-    margin-bottom : 2rem ;
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 350px;
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
-.card{
-    background : white ;
-    border-radius : 9px ;
-    padding : 1.5rem ;
-    box-shadow : 0 1px 3px rgba(0,0,0,0.1) ;
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
 }
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #475569;
+}
+.card-menu {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+.amount {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.change {
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.change-up { color: #10b981; }
 
-.card-header{
-    display : flex ;
-    justify-content : space-between ;
-    align-items : center ;
-    margin-bottom : 1rem ;
-}
-.card-title{
-    font-size : 1rem ;
-    font-weight : 600 ;
-    color : #374151;
-}
-.card-menu{
-    background : none ;
-    border : none ;
-    cursor : pointer ;
-    color : #9ca3af;
-    padding : 0.25rem ;
-}
-.amount{
-    font-size : 1.5rem ;
-    font-weight : 700 ;
-    margin-bottom : 0.5rem ;
-}
-.change{
-    font-size : 0.8rem ;
-    display : flex ;
-    align-items : center ;
-    gap : 0.25rem ;
-    color : rgb(89,196,89) ;
-
-}
-.my-card{
-    background : linear-gradient(135deg , #059669 0% , #10b981 100%) ;
-    color : white ;
+/* My Card (Virtual Credit Card) */
+.my-card {
+    background: linear-gradient(135deg, #0f172a, #10b981);
+    color: white;
     position: relative;
-    overflow : hidden ;
+    overflow: hidden;
 }
-.card-chip{
-    width : 35px ;
-    height : 28px ;
-    background : #fbbf24 ;
-    border-radius : 4px ;
-    position: relative ;
-    margin-bottom : 2rem ;
-}
-.card-chip::after{
-    content : "";
-    position: absolute ;
-    top : 4px ;
-    left : 4px ;
-    right : 4px ;
-    bottom : 4px ;
-    background : #92400e;
+.card-chip {
+    width: 32px;
+    height: 24px;
+    background: #fbbf24;
     border-radius: 4px;
+    margin-bottom: 2rem;
+    position: relative;
 }
-.card-number{
-    font-size : 1.25rem ;
-    letter-spacing : 0.15rem ;
-    margin-bottom : 1rem ;
+.card-chip::after {
+    content: "";
+    position: absolute;
+    top: 4px; left: 4px; right: 4px; bottom: 4px;
+    border: 1px solid #92400e;
+    border-radius: 2px;
 }
-.card-logo{
-    position: absolute ;
-    bottom : 1rem ;
-    right : 1rem ;
-    display : flex ;
-    gap : -8rem ;
+.card-number {
+    font-size: 1.25rem;
+    letter-spacing: 0.1rem;
+    margin-bottom: 1rem;
+    font-family: 'Courier New', Courier, monospace;
 }
-.card-logo-circle{
-    width : 25px ;
-    height : 25px ;
-    border-radius : 50% ;
-    border : 2px solid white ;
+.card-logo {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
 }
-.logo-red{
-    background : #ef4444 ;
+.logo-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
 }
-.logo-orange{
-    background : #f59e0b ;
-    margin-left : -8px ;
+.logo-red { background: #ef4444; }
+.logo-orange {
+    background: #f59e0b;
+    margin-left: -8px;
+    opacity: 0.9;
 }
-.spending-section{
-    margin-top : 2rem ;
+.spending-section { margin-top: 2rem; }
+.spending-limit { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.2rem; }
+.spending-used { font-size: 0.75rem; opacity: 0.8; margin-bottom: 0.5rem; }
+.progress-bar {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 3px;
+    overflow: hidden;
 }
-.spending-limit{
-    font-size : 1.5rem ;
-    font-weight : 700 ;
-    color : #1e293b ;
+.progress-fill {
+    height: 100%;
+    background: #ea580c;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.5s ease;
 }
-.spending-used{
-    font-size : 0.875rem ;
-    color : #6b7280 ;
-    margin-bottom : 0.5rem ;
+
+/* Transactions Table */
+.transactions-section { margin-top: 2rem; }
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
-.progress-bar{
-    height : 8px ;
-    background : #f3f4f6;
-    overflow : hidden ;
-    border-radius : 4px ;
+.filters {
+    display: flex;
+    gap: 1rem;
 }
-.progress-fill{
-    height : 100% ;
-    width : 37% ;
-    background : #ea580c ;
-    border-radius : 4px ;
+.filter-button {
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.transactions-table th {
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    border-bottom: 1px solid #e5e7eb;
+}
+.transactions-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 0.875rem;
+}
+.status-success {
+    background: #dcfce7;
+    color: #16a34a;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+}
+.action-button {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+

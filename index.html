@@ -1,142 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal Expense Tracker</title>
+    <!-- FontAwesome CDN for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-    <header class="header">
-        <h1>Good Morning , Sunny ...!!</h1>
+    <div class="header">
+        <h1>Good morning, Codynn</h1>
         <div class="header-controls">
             <div class="dropdown">
-                Daily <i class="fas fa-chevron-down"></i>
+                USD ($) <i class="fas fa-chevron-down"></i>
             </div>
             <div class="date-picker">
-                <i class="fas fa-calendar"></i>
-                26-june-2026
+                <i class="fas fa-calendar"></i> 16 January 2025
             </div>
-            <div class="export-btn">
-                <i class="fas fa-download"></i>
-                Export
-            </div>
-
+            <button class="export-btn">
+                <i class="fas fa-download"></i> Export
+            </button>
         </div>
-    </header>
+    </div>
 
-    <main class="main-content">
+    <div class="main-content">
+        <!-- Top KPI Cards -->
         <div class="dashboard-grid">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Monthly Income</h3>
-                    <button class="card-menu">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
+                    <span class="card-title">Monthly income</span>
+                    <button class="card-menu"><i class="fas fa-ellipsis"></i></button>
                 </div>
-                <div class="amount income-amount">$2,345.00</div>
-                <div class="change">
-                    <i class="fas fa-arrow-up"></i>
-                    12% vs LastMonth
-                </div>
+                <div class="amount income-amount" id="income-amount">$2,645.00</div>
+                <div class="change change-up"><i class="fas fa-arrow-up"></i> 12% vs last month</div>
             </div>
-
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Monthly Expenses</h3>
-                    <button class="card-menu">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
+                    <span class="card-title">Monthly expenses</span>
+                    <button class="card-menu"><i class="fas fa-ellipsis"></i></button>
                 </div>
-                <div class="amount income-amount">$1,845.00</div>
-                <div class="change">
-                    <i class="fas fa-arrow-up"></i>
-                    12% vs LastMonth
-                </div>
+                <div class="amount expense-amount" id="expense-amount">$1,895.00</div>
+                <div class="change change-up"><i class="fas fa-arrow-up"></i> 8% vs last month</div>
             </div>
+
+            <!-- Virtual Credit Card -->
             <div class="card my-card">
-                <div class="card-header">
-                    <h3 class="card-title">My Card</h3>
-                    <button class="card-menu" style="color:white;">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </button>
-                </div>
-                <div style="opacity:0.9; font-size:0.85rem ; margin-bottom:1rem ;">Linked to your Primary Wallet</div>
+                <div style="font-size: 0.75rem; opacity: 0.8; margin-bottom: 1rem;">Linked to your primary wallet</div>
                 <div class="card-chip"></div>
-                <div class="card-number">5432 2735 0037 0015</div>
-                <div class="card-holder">Sunny</div>
+                <div class="card-number">**** **** **** 4242</div>
+                <div class="card-holder">Codynn</div>
                 <div class="card-logo">
-                    <div class="card-logo-circle logo-red"></div>
-                    <div class="card-logo-circle logo-orange"></div>
+                    <div class="logo-circle logo-red"></div>
+                    <div class="logo-circle logo-orange"></div>
                 </div>
-
                 <div class="spending-section">
-                    <div style="margin-bottom: 0.5rem ; font-size: 0.875rem; opacity :0.9;">Spending Limit</div>
-                    <div class="spending-limit">$4,564.00</div>
-                    <div class="spending-used">Used From $15,564.00</div>
+                    <div style="margin-bottom: 0.5rem; font-size: 0.75rem; opacity: 0.9;">Spending limit</div>
+                    <div class="spending-limit" id="spending-limit">$12,645.00</div>
+                    <div class="spending-used">Used from $12,645.00</div>
                     <div class="progress-bar">
-                        <div class="progress-fill"></div>
+                        <div class="progress-fill" id="progress-fill"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <div class="chart-section">
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Overview</h3>
-                    <div style="display:flex;  gap:1rem;">
-                        <div class="dropdown">
-                            Yearly <i class="fas fa-chevron-down"></i>
-
-                        </div>
-                        <button class="filter-btn">
-                            <i class="fas fa-filter"></i>
-                            Filter
-                        </button>
-                    </div>
+        <!-- Transactions Section -->
+        <div class="transactions-section">
+            <div class="section-header">
+                <h2>Recent Transactions</h2>
+                <div class="filters">
+                    <button class="filter-button"><i class="fas fa-sort"></i> Sort</button>
+                    <button class="filter-button"><i class="fas fa-filter"></i> Filter</button>
                 </div>
             </div>
+            
+            <table class="transactions-table" id="transactions-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="transactions-tbody">
+                    <!-- Javascript will dynamically populate rows here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-            <div class="chart-container">
-                <div class="chart-bar" style="height: 120px ; "></div>
-                <div class="chart-bar" style="height: 80px ; "></div>
-                <div class="chart-bar active" style="height: 200px ; ">
-                    <div style="position:absolute; timeline-scope: -30px; left:50%; transform: translateX(-50%); background: white; padding: 0.25rem 0.5rem; border-radius: 5px; box-shadow: 0 2px 8px rgba(0,0,0,0.1) ; font-size: 0.75rem;">
-                        <div style="font-weight: bold ; ">June 2026</div>
-                        <div style="color: #10b981; ">Income : $897</div>
-                        <div style="color: #ea580c; ">Expenses : $677</div>
+    <!-- Floating Action Buttons -->
+    <div class="add-buttons">
+        <button class="fab fab-income" title="Add Income" onclick="openModel('incomeModel')">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="fab fab-expense" title="Add Expense" onclick="openModel('expenseModel')">
+            <i class="fas fa-minus"></i>
+        </button>
+    </div>
+
+    <!-- Income Modal -->
+    <div class="model" id="incomeModel">
+        <div class="model-content">
+            <div class="model-header">
+                <h2 class="model-title">Add Income</h2>
+                <button class="close-button" onclick="closeModel('incomeModel')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="model-body">
+                <form id="incomeForm">
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" class="form-input" id="incomeAmount" placeholder="Enter amount" required autocomplete="off">
                     </div>
-                    <div class="chart-bar-income" style="height: 120px;"></div>
-                    <div class="chart-bar-expense" style="height: 80px;"></div>
-                </div>
-                <div class="chart-bar" style="height: 150px ; "></div>
-                <div class="chart-bar" style="height: 90px ; "></div>
-                <div class="chart-bar" style="height: 110px ; "></div>
-                <div class="chart-bar" style="height: 130px ; "></div>
-                <div class="chart-bar" style="height: 100px ; "></div>
-                <div class="chart-bar" style="height: 80px ; "></div>
-                <div class="chart-bar" style="height: 140px ; "></div>
-                <div class="chart-bar" style="height: 90px ; "></div>
-
-
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="incomeCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Freelance">Freelance</option>
+                            <option value="Business">Business</option>
+                            <option value="Investment">Investment</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" id="incomeDescription" placeholder="Enter description">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" id="incomeDate" required>
+                    </div>
+                </form>
+            </div>
+            <div class="model-footer">
+                <button class="button-secondary" onclick="closeModel('incomeModel')">Cancel</button>
+                <button class="button-primary" onclick="addIncome()">Add Income</button>
             </div>
         </div>
+    </div>
 
-
-
-    </main>
-
-
+    <!-- Expense Modal -->
+    <div class="model" id="expenseModel">
+        <div class="model-content">
+            <div class="model-header">
+                <h2 class="model-title">Add Expense</h2>
+                <button class="close-button" onclick="closeModel('expenseModel')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="model-body">
+                <form id="expenseForm">
+                    <div class="form-group">
+                        <label class="form-label">Amount</label>
+                        <input type="number" class="form-input" id="expenseAmount" placeholder="Enter amount" required autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="expenseCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Shopping">Shopping</option>
+                            <option value="Transport">Transport</option>
+                            <option value="Utilities">Utilities</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-input" id="expenseDescription" placeholder="Enter description">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-input" id="expenseDate" required>
+                    </div>
+                </form>
+            </div>
+            <div class="model-footer">
+                <button class="button-secondary" onclick="closeModel('expenseModel')">Cancel</button>
+                <button class="button-primary" onclick="addExpense()">Add Expense</button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
-
 </html>
